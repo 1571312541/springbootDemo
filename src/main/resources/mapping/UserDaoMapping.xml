@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zhangchao.springboot.dao.UserDao">
+    <sql id="selectSql">
+        id,username,password,age,job
+    </sql>
+    <sql id="insertSql">
+        username,password,age,job
+    </sql>
+    <sql id="insertSql2">
+        id,uid,class_name
+    </sql>
+    <select id="getUser" resultType="user">
+        select <include refid="selectSql"></include> from user
+    </select>
+
+    <!--该方法addUser和addUserClass用来测试事务-->
+    <insert id="addUser" parameterType="user">
+        <selectKey resultType="integer" order="AFTER" keyProperty="id">
+          select last_insert_id()
+        </selectKey>
+        insert into user(<include refid="insertSql"></include>) values(
+          #{username},#{password},#{age},#{job}
+        )
+    </insert>
+
+    <insert id="addUserClass" parameterType="userClass">
+        insert into user_class (<include refid="insertSql2"></include>) values(
+          #{id},#{uid},#{className}
+        )
+    </insert>
+</mapper>
