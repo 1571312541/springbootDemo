@@ -1,7 +1,7 @@
 function getUser() {
     $.ajax({
         type:"post",
-        url:"user/getUser",
+        url:"/user2/userList",
         data:"",
         dataType:"json",
         success:function (data) {

@@ -1,15 +1,47 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <script src="/static/jquery-1.11.1.min.js" type="text/javascript"></script>
+    <script src="/js/jquery-1.11.1.min.js" type="text/javascript"></script>
 </head>
 <body>
-    <span th:text="${key}">欢迎</span>
-    <a id="test" href="#" onclick="getUser()">点击</a>
+
+    <h3>欢迎页面！欢迎：<span th:text="${key}">默认用户</span></h3>
+    <h3>欢迎页面！欢迎：<span th:text="${requestVal}">默认用户</span></h3>
+    <h3>欢迎页面！欢迎：<span th:text="${session.sessionVal}">默认用户</span></h3>
+    <h3>欢迎页面！欢迎：<span th:text="${application.applicationVal}">默认用户</span></h3>
+   <!-- 内嵌变量
+    为了模板更加易用，Thymeleaf还提供了一系列Utility对象（内置于Context中），可以通过#直接访问：
+    dates ：  java.util.Date的功能方法类。
+    calendars :  类似#dates，面向java.util.Calendar
+    numbers :  格式化数字的功能方法类
+    strings :  字符串对象的功能类，contains,startWiths,prepending/appending等等。
+    objects:  对objects的功能类操作。
+    bools:  对布尔值求值的功能方法。
+    arrays：对数组的功能类方法。
+    lists:   对lists功能类方法
+    sets
+    maps-->
+    <p>当前时间<span th:text="${#dates.format(#dates.createNow(),'yyyy-MM-dd hh:mm:ss')}"></span></p>
+    <ul>
+        <li><a id="userList" href="#" th:href="@{/user2/userList}">用户列表</a></li>
+        <li>1</li>
+        <li>1</li>
+    </ul>
+
+    <input type="text">
+    <table>
+        <tr>
+            <td th:test="${#numbers.formatDecimal(3.456,2,2)}">11</td>
+            <td>22</td>
+        </tr>
+    </table>
 
 
+
+    <script src="/js/index.js" type="text/javascript"></script>
 </body>
 </html>
-<script src="index.js" type="text/javascript"></script>
+

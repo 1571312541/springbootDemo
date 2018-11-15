@@ -15,26 +15,22 @@ import java.util.List;
  *
  * @author 22902
  * @create 2018/11/12
+ * RestController 这个注解是Controller和ResponseBody结合
  */
 @RestController
 @RequestMapping("/user")
 public class UserController {
-
+    /**
+     *    日志
+     */
     private static Logger logger =  LoggerFactory.getLogger(UserController.class);
+
     @Resource
     private UserService userService;
-
-    /*@RequestMapping("/index")
-    public String setKey(Model model){
-        System.out.println("-----------------------返回index.html");
-        model.addAttribute("key","setKey");
-        return "index";
-    }*/
 
    @RequestMapping("/getUser")
     public List<User> getUser(){
        List<User> user = userService.getUser();
-
        for (User user1 : user) {
            System.out.println(user1);
            logger.error("=========="+user1);
@@ -42,8 +38,4 @@ public class UserController {
        return user;
     }
 
-    @RequestMapping("/hello")
-    public String index() {
-        return "Hello World";
-    }
 }

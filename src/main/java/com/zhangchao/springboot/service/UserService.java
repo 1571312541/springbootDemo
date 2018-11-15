@@ -13,6 +13,8 @@ import java.util.List;
  */
 public interface UserService {
 
+    User getUserById(Integer id);
+
     List<User> getUser();
 
     Integer addUserAndUserClass(User user, UserClass userClass);

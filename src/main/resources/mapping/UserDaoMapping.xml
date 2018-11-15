@@ -10,6 +10,10 @@
     <sql id="insertSql2">
         id,uid,class_name
     </sql>
+    <select id="getUserById" resultType="user">
+        select <include refid="selectSql"></include> from user where id = ${id}
+    </select>
+
     <select id="getUser" resultType="user">
         select <include refid="selectSql"></include> from user
     </select>

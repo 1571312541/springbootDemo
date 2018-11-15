@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="/js/jquery-1.11.1.min.js" type="text/javascript"></script>
+</head>
+<body>
+<!--选择(星号)表达式-->
+<!--选择表达式很像变量表达式，不过它们用一个预先选择的对象来代替上下文变量容器来执行-->
+    <p>选择(星号)表达式</p>
+    <table th:object="${user}"  border="1">
+        <tr>
+            <td>id</td>
+            <td>age</td>
+            <td>username</td>
+            <td>password</td>
+            <td>job</td>
+        </tr>
+        <tr>
+            <td th:text="*{id}">1</td>
+            <td th:text="*{age}">1</td>
+            <td th:text="*{username}">1</td>
+            <td th:text="*{password}">1</td>
+            <td th:text="*{job}">1</td>
+        </tr>
+    </table>
+    <br>
+    <br>
+    <p>变量表达式</p>
+    <table border="1">
+        <tr>
+            <td>id</td>
+            <td>age</td>
+            <td>username</td>
+            <td>password</td>
+            <td>job</td>
+
+        </tr>
+        <tr>
+            <td th:text="${user.id}">1</td>
+            <td th:text="${user.age}">1</td>
+            <td th:text="${user.username}">1</td>
+            <td th:text="${user.password}">1</td>
+            <td th:text="${user.job}">1</td>
+        </tr>
+    </table>
+    <br>
+    <br>
+    <p>switch和case</p>
+    <div th:switch="${user.job}">
+        <p th:case="'教师'">我是一名教师</p>
+        <p th:case="'学生'">我是一名学生</p>
+    </div>
+</body>
+</html>
+

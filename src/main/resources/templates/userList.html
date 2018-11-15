@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="/js/jquery-1.11.1.min.js" type="text/javascript"></script>
+</head>
+<body>
+<!--th:each属性用于迭代循环，语法：th:each="obj,iterStat:${objList}"
+    迭代对象可以是java.util.List,java.util.Map,数组等;
+    iterStat称作状态变量，属性有：
+    index:当前迭代对象的index（从0开始计算）
+    count: 当前迭代对象的index(从1开始计算)
+    size:被迭代对象的大小
+    current:当前迭代变量
+    even/odd:布尔值，当前循环是否是偶数/奇数（从0开始计算）
+    first:布尔值，当前循环是否是第一个
+    last:布尔值，当前循环是否是最后一个-->
+
+    <table th:each="user,userStat : ${userList}" border="1">
+        <tr>
+            <td>序号</td>
+            <td>id</td>
+            <td>age</td>
+            <td>username</td>
+            <td>password</td>
+            <td>job</td>
+            <td>操作</td>
+        </tr>
+        <tr>
+            <td th:text="${userStat.index+1}">1</td>
+            <td th:text="${user.id}">1</td>
+            <td th:text="${user.age}">1</td>
+            <td th:text="${user.username}">1</td>
+            <td th:text="${user.password}">1</td>
+            <td th:text="${user.job}">1</td>
+            <td>
+                <a href="#" th:href="@{/user2/getUserById(id=${user.id})}">查看</a>
+                <!--只有再id=2时，有删除按钮-->
+                <a href="#" th:if="${user.id==2}" th:href="@{/user2/getUserById(id=${user.id})}">删除</a>
+                <!--只有id != 2时，有编辑按钮-->
+                <a href="#" th:unless="${user.id==2}" th:href="@{/user2/getUserById(id=${user.id})}">编辑</a>
+
+            </td>
+        </tr>
+
+
+    </table>
+
+    <script src="/js/index.js" type="text/javascript"></script>
+</body>
+</html>
+
