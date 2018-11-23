@@ -1,6 +1,7 @@
 package com.zhangchao.springboot.controller;
 
 import com.zhangchao.springboot.entity.User;
+import com.zhangchao.springboot.result.JsonResult;
 import com.zhangchao.springboot.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,6 +10,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -29,6 +32,7 @@ public class UserController2 {
 
    @Autowired
     private UserService userService;
+
     /**
      * @param model
      * @return
@@ -47,7 +51,7 @@ public class UserController2 {
         return "index";
     }
 
-    @GetMapping("/userList")
+    @RequestMapping(value = "/findUser",method = RequestMethod.GET)
     public String userList(Model model) throws Exception {
         logger.warn("-----------------------返回userList.html");
         List<User> user = userService.getUser();
@@ -55,8 +59,8 @@ public class UserController2 {
         return "userList";
     }
 
-    @GetMapping("/getUserById")
-    public String getUserById(Model model,Integer id) throws Exception {
+    @RequestMapping(value = "/findUserById",method = RequestMethod.GET)
+    public String getUserById(Integer id,Model model) throws Exception {
         logger.warn("-----------------------返回user.html");
         if (id!=null){
             User user = userService.getUserById(id);
@@ -65,10 +69,20 @@ public class UserController2 {
         }else {
             return "error";
         }
-
-
     }
-
+    @ResponseBody
+    @RequestMapping(value = "/findUserById2",method = RequestMethod.GET)
+    public JsonResult getUserById2(Integer id,Model model) throws Exception {
+        JsonResult result = new JsonResult();
+        logger.warn("-----------------------测试findUserById2");
+        if (id!=null){
+            User user = userService.getUserById(id);
+            model.addAttribute("user",user);
+            return  result.success("成功",true,user);
+        }else {
+            return result.failure("参数不能为空22",false);
+        }
+    }
 
     @RequestMapping("/index2")
     public String returnJsp() throws Exception{

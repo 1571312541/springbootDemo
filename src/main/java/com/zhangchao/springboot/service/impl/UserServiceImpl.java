@@ -42,7 +42,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public Integer addUserAndUserClass(User user, UserClass userClass) {
         userDao.addUser(user);
-//        userClass.setUid(user.getId()); //测试事务，发生异常时，是否会回滚
+        userClass.setUid(user.getId()); //测试事务，发生异常时，是否会回滚,当注释掉这一行时，会报错，会回滚，证明事务
         Integer row = userDao.addUserClass(userClass);
         System.out.println(row+"=================");
         return row;
