@@ -28,6 +28,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public Integer deleteUserById(Integer id) {
+        return userDao.deleteUserById(id);
+    }
+
+    @Override
+    public User getUserByName(String username) {
+        return userDao.getUserByName(username);
+    }
+
+    @Override
     public List<User> getUser() {
         return userDao.getUser();
     }

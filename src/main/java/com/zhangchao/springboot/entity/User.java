@@ -1,8 +1,11 @@
 package com.zhangchao.springboot.entity;
 
+import lombok.ToString;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 /**
  * 〈测试@PropertySource读取外部资源文件〉
@@ -10,6 +13,8 @@ import org.springframework.stereotype.Component;
  * @author 22902
  * @create 2018/11/12
  */
+
+@ToString
 @Component
 @ConfigurationProperties(prefix = "user")
 public class User {
@@ -23,6 +28,15 @@ public class User {
     @Value("${user.pwd}")
     private String password;
     private String job;
+    private List<Role> roles;
+
+    public List<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
+    }
 
     public Integer getId() {
         return id;
@@ -62,16 +76,5 @@ public class User {
 
     public void setJob(String job) {
         this.job = job;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                "age=" + age +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", job='" + job + '\'' +
-                '}';
     }
 }

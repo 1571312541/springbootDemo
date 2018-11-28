@@ -41,9 +41,9 @@
             <td>
                 <a href="#" th:href="@{/user2/findUserById(id=${user.id})}">查看</a>
                 <!--只有再id=2时，有删除按钮-->
-                <a href="#" th:if="${user.id==2}" th:href="@{/user2/findUserById(id=${user.id})}">删除</a>
+                <a href="#" th:if="${user.age>30}" th:href="@{/user2/deleteUserById(id=${user.id})}">删除</a>
                 <!--只有id != 2时，有编辑按钮-->
-                <a href="#" th:unless="${user.id==2}" th:href="@{/user2/findUserById(id=${user.id})}">编辑</a>
+                <a href="#" th:unless="${user.age>30}" th:href="@{/user2/findUserById(id=${user.id})}">编辑</a>
 
             </td>
         </tr>

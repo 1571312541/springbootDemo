@@ -18,11 +18,16 @@ public interface UserDao {
 
     User getUserById(@Param("id") Integer id);
 
+    Integer deleteUserById(@Param("id") Integer id);
+
+    User getUserByName(@Param("username") String username);
+
     List<User> getUser();
 
     Integer addUser(User user);
 
     Integer addUserClass(UserClass userClass);
+
 
 
 

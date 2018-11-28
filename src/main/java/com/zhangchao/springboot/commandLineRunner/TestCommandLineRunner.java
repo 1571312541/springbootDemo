@@ -7,6 +7,9 @@ import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * 〈CommandLineRunner和ApplicationRunner〉
  *
@@ -38,6 +41,12 @@ public class TestCommandLineRunner implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date = format.parse("2018-11-28 00:05:00");
+        long l = date.getTime() - 477500;
+        Date date1 = new Date(l);
+        System.out.println(format.format(date1));
+
         System.out.println(user.toString());
         System.out.println(userClass.toString());
 

@@ -15,6 +15,10 @@ public interface UserService {
 
     User getUserById(Integer id);
 
+    Integer deleteUserById(Integer id);
+
+    User getUserByName(String username);
+
     List<User> getUser();
 
     Integer addUserAndUserClass(User user, UserClass userClass);

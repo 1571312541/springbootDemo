@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zhangchao.springboot.dao.PermissionDao">
+    <sql id="selectSql">
+        id,name,resource
+    </sql>
+    <sql id="insertSql">
+       name,resource
+    </sql>
+
+    <select id="getAllPermissions" resultType="permission">
+        SELECT <include refid="selectSql"></include> FROM permission
+
+    </select>
+
+
+</mapper>

@@ -3,6 +3,7 @@ package com.zhangchao.springboot.controller;
 import com.zhangchao.springboot.entity.User;
 import com.zhangchao.springboot.result.JsonResult;
 import com.zhangchao.springboot.service.UserService;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +39,7 @@ public class UserController2 {
      * @return
      */
 //    @RequestMapping("/index")  //RequestMapping或者GetMapping 都可以
+    @RequiresPermissions("u:index")
     @GetMapping("/index")
     public String returnHtml(Model model, HttpServletRequest request) throws Exception{
         logger.warn("-----------------------返回index.html");
@@ -50,7 +52,7 @@ public class UserController2 {
         context.setAttribute("applicationVal","application域中的值");
         return "index";
     }
-
+    @RequiresPermissions("u:list")
     @RequestMapping(value = "/findUser",method = RequestMethod.GET)
     public String userList(Model model) throws Exception {
         logger.warn("-----------------------返回userList.html");
@@ -58,10 +60,10 @@ public class UserController2 {
         model.addAttribute("userList",user);
         return "userList";
     }
-
+    @RequiresPermissions("u:look")
     @RequestMapping(value = "/findUserById",method = RequestMethod.GET)
     public String getUserById(Integer id,Model model) throws Exception {
-        logger.warn("-----------------------返回user.html");
+        logger.warn("-----------------------findUserById");
         if (id!=null){
             User user = userService.getUserById(id);
             model.addAttribute("user",user);
@@ -69,6 +71,17 @@ public class UserController2 {
         }else {
             return "error";
         }
+    }
+    @RequiresPermissions("u:delete")
+    @RequestMapping(value = "/deleteUserById",method = RequestMethod.GET)
+    public String deleteUserById(Integer id,Model model) throws Exception {
+        logger.warn("----------------------deleteUserById");
+        if (id!=null){
+            Integer row = userService.deleteUserById(id);
+            System.out.println("删除结果"+row);
+            return "index";
+        }
+        return null;
     }
     @ResponseBody
     @RequestMapping(value = "/findUserById2",method = RequestMethod.GET)
@@ -89,5 +102,15 @@ public class UserController2 {
         logger.warn("-----------------------返回index2.jsp");
         return "index2";
     }
+   @RequestMapping(value = "/notRole",method = RequestMethod.GET)
+    public String notRole() throws Exception{
+        logger.warn("-----------------------notRole未授权页面");
+        return "notRole";
+    }
+//  @RequestMapping("/logout")
+//    public String logout() throws Exception{
+//        logger.warn("-----------------------notRole未授权页面");
+//        return "login";
+//    }
 
 }

@@ -10,14 +10,47 @@
     <sql id="insertSql2">
         id,uid,class_name
     </sql>
-    <select id="getUserById" resultType="user">
-        select <include refid="selectSql"></include> from user where id = ${id}
+    <delete id="deleteUserById" parameterType="java.lang.Integer">
+        delete from user where id=#{id}
+    </delete>
+    <select id="getUserById" resultType="user" parameterType="java.lang.Integer">
+        select <include refid="selectSql"></include> from user where id = #{id}
     </select>
+ <!-- =========================================================================== -->
+    <resultMap id="userMap" type="user">
+         <id column="uid" property="id"></id>
+        <result column="username" property="username"></result>
+        <result column="password" property="password"></result>
+        <collection property="roles" ofType="role">
+            <id column="rid" property="id"></id>
+            <result column="name" property="name"></result>
+            <collection property="permissions" ofType="permission">
+                <id column="pid" property="id"></id>
+                <result column="resource" property="resource"></result>
+            </collection>
+        </collection>
+    </resultMap>
+
+    <select id="getUserByName" resultMap="userMap" parameterType="java.lang.String">
+        SELECT r.name,u.id uid,r.id rid,p.id pid,u.`username`,u.`password`,p.`name`,p.`resource` FROM role r
+        LEFT JOIN user_role ur
+        ON r.`id` = ur.`role_id`
+        LEFT JOIN USER u
+        ON u.`id` = ur.`user_id`
+        LEFT JOIN role_permission rp
+        ON rp.`role_id` = r.`id`
+        LEFT JOIN permission p
+        ON p.`id` = rp.`permission_id`
+        WHERE u.username=#{username};
+    </select>
+
+<!-- =========================================================================== -->
 
     <select id="getUser" resultType="user">
-        select <include refid="selectSql"></include> from user
+        SELECT <include refid="selectSql"></include> FROM USER
     </select>
 
+<!-- =========================================================================== -->
     <!--该方法addUser和addUserClass用来测试事务-->
     <insert id="addUser" parameterType="user">
         <selectKey resultType="integer" order="AFTER" keyProperty="id">
